@@ -1,0 +1,11 @@
+{
+  "env": {
+    "baseUrl": "https://app-stag.amplifidor.com/",
+    "firstName": "Ahmed",
+    "lastName": "Ashour",
+    "email": "ahmed.asho@yahoo.com",
+    "phoneNumber": "9911122201",
+    "superOTP": "123456",
+    "companyName": "Amplifidor"
+  }
+}
