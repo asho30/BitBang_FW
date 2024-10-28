@@ -1,5 +1,9 @@
 {
   "devDependencies": {
     "cypress": "^13.14.2"
-  }
+  },
+  "scripts": {
+     "cypress: open": "./node_modules/.bin/cypress open",
+     "cypress: run": "./node_modules/.bin/cypress run --spec ** / *.spec.cy.js"
+    }
 }

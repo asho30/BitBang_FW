@@ -22,7 +22,8 @@ module.exports = defineConfig({
       console.log(config) // see everything in here!
       return require('./cypress/plugins/index.js')(on, config);
     },
-    "specPattern": "cypress/e2e/*.{js,jsx,ts,tsx}",
+    "specPattern": "cypress/e2e/**/*.{js,jsx,ts,tsx}",
+    "experimentalRunAllSpecs": true,
   }
 });
 

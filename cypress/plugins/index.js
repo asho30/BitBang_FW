@@ -16,7 +16,7 @@ const path = require('path')
 //const selectTestsWithGrep = require('cypress-select-tests/grep')
 //const fetch = require('node-fetch')
 const requestTemplates = require('../requests/requestsTemplates')
-const networker = require('../fixtures/networker')
+const user = require('../fixtures/user')
 //const rp = require('request-promise')
 let oAuthdata = null
 let data
@@ -87,7 +87,7 @@ async function getAuthToken(config) {
   return data
 }
 
-async function networkerSignIn(networker, config) {
+async function signIn(user, config) {
   if (oAuthdata === null) {
     oAuthdata = await getAuthToken(config)
   }
@@ -105,14 +105,14 @@ async function networkerSignIn(networker, config) {
     },
     body: JSON.stringify({
       "operationName": requestTemplates.signIn.operationName,
-      "variables": { "input": networker },
+      "variables": { "input": user },
       "query": requestTemplates.signIn.query
     })
   })
 }
 
 
-async function networkerSignUp(networker, config) {
+async function signUp(user, config) {
   if (oAuthdata === null) {
     oAuthdata = await getAuthToken(config)
   }
@@ -130,7 +130,7 @@ async function networkerSignUp(networker, config) {
     },
     body: JSON.stringify({
       "operationName": requestTemplates.signUp.operationName,
-      "variables": { "input": networker },
+      "variables": { "input": user },
       "query": requestTemplates.signUp.query
     })
   })
@@ -141,7 +141,7 @@ module.exports = (on, config) => {
   on('before:run', (details) => {
     //console.log('details',details)
     let connectioninfo = getDbConnectionInfo2(details)
-    networker.name = 'automation networker'
+    user.name = 'automation networker'
   })
 
   on('task', {
@@ -163,9 +163,9 @@ module.exports = (on, config) => {
     generateAccessCode({ phone }) {
       cy.getToken().then(request_config => {
         var { headers } = request_config
-        headers[networker] = networker
-        networker.id = networkerId
-        networker.settings.selfEnrollmentEnabled = true
+        headers[user] = user
+        user.id = userId
+        user.settings.selfEnrollmentEnabled = true
         cy.generateAccessCode(phone, request_config)
       })
     }
@@ -173,8 +173,8 @@ module.exports = (on, config) => {
 
   on('task', {
     // destructure the argument into the individual fields
-    addNewNetworker({ networker, config }) {
-      return addnetworker(networker, config)
+    addNewNetworker({ user, config }) {
+      return addnetworker(user, config)
     }
   })
 
@@ -208,4 +208,3 @@ module.exports = (on, config) => {
   const file = config.env.configFile || 'staging'
   return getConfigurationByFile(file)
 }
-
